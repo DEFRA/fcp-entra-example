@@ -1,0 +1,37 @@
+# This override file should be used when running this service in isolation
+# to provide dependencies and expose ports for local testing
+
+services:
+  fcp-entra-example:
+    build:
+      target: development
+    image: fcp-entra-example-development
+    container_name: fcp-entra-example-development
+    ports:
+      - "3001:3001"
+      - "9230:9229"
+    volumes:
+      - ./src:/home/node/src
+      - ./package.json:/home/node/package.json
+    networks:
+      - fcp-entra-example
+    depends_on:
+      redis:
+        condition: service_started
+
+  redis:
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --dir /data --save 5 1
+    networks:
+      - fcp-entra-example
+
+networks:
+  fcp-entra-example:
+    name: fcp-entra-example
+    driver: bridge
+
+volumes:
+  redis_data:

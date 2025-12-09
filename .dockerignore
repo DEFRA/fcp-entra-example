@@ -1,0 +1,11 @@
+node_modules
+Dockerfile
+.dockerignore
+compose*
+.secrets.baseline
+.pre-commit-config.yaml
+LICENCE
+README.md
+.vscode
+.gitignore
+.env

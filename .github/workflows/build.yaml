@@ -1,0 +1,40 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+      - ready_for_review
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create test output directory
+      run: mkdir -p -m 777 test-output
+    
+    - name: Run tests
+      run: npm run docker:test
+
+    - name: Update coverage paths
+      run: sed -i -e 's|/home/node|.|g' ./test-output/lcov.info
+
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v6
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag fcp-entra-example
