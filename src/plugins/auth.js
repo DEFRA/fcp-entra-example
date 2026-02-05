@@ -81,9 +81,11 @@ function getProfile (credentials, _params, _get) {
 
   // Map all JWT properties to the credentials object so it can be stored in the session
   // Add some additional properties to the profile object for convenience
+  // login_hint is an optional claim.  A normal change request to CCoE is required to enable this.
   credentials.profile = {
     ...payload,
-    sessionId: payload.sid
+    sessionId: payload.sid,
+    loginHint: payload.login_hint
   }
 }
 

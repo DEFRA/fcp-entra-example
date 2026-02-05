@@ -66,7 +66,7 @@ export default [{
       // Clear local session cookie
       request.cookieAuth.clear()
 
-      const signOutUrl = await getSignOutUrl(request, request.auth.credentials.token)
+      const signOutUrl = await getSignOutUrl(request, request.auth.credentials.loginHint)
       return h.redirect(signOutUrl)
     }
 
