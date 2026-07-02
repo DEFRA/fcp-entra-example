@@ -1,10 +1,9 @@
-import { jest } from '@jest/globals'
 import entra from '../../../src/config/entra.js'
 import cache from '../../../src/config/cache.js'
 
 describe('Entra config', () => {
   beforeEach(() => {
-    jest.resetModules()
+    vi.resetModules()
     process.env.NODE_ENV = 'test'
     process.env.HOST = '127.0.0.1'
     process.env.PORT = 4000

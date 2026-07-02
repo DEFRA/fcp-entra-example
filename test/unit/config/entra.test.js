@@ -1,8 +1,6 @@
-import { jest } from '@jest/globals'
-
 describe('Entra config', () => {
   beforeEach(() => {
-    jest.resetModules()
+    vi.resetModules()
     process.env.ENTRA_WELL_KNOWN_URL = 'mockWellKnownUrl'
     process.env.ENTRA_CLIENT_ID = 'mockClientId'
     process.env.ENTRA_CLIENT_SECRET = 'mockClientSecret'
@@ -12,7 +10,7 @@ describe('Entra config', () => {
   })
 
   afterEach(() => {
-    jest.resetModules()
+    vi.resetModules()
   })
 
   test('should return well known url from environment variable', async () => {
@@ -47,7 +45,7 @@ describe('Entra config', () => {
 
   test('should default to refreshing tokens if environment variable is not set', async () => {
     delete process.env.ENTRA_REFRESH_TOKENS
-    jest.resetModules()
+    vi.resetModules()
     const { default: config } = await import('../../../src/config/entra.js')
     expect(config.get('refreshTokens')).toBe(true)
   })
